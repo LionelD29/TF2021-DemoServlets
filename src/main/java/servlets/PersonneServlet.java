@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import models.Personne;
 import services.PersonneServiceImpl;
 
+import static utils.Util.escapeSpecialCharacters;
+
 @WebServlet(name = "PersonneServlet", value = "/personne")
 public class PersonneServlet extends HttpServlet {
     private final PersonneServiceImpl list = new PersonneServiceImpl();
@@ -44,9 +46,9 @@ public class PersonneServlet extends HttpServlet {
         list.getAll()
                 .forEach(
                         p -> responseHtml.append("\t\t\t\t<li>")
-                                .append(p.getPrenom())
+                                .append(escapeSpecialCharacters(p.getPrenom()))
                                 .append(" ")
-                                .append(p.getNom())
+                                .append(escapeSpecialCharacters(p.getNom()))
                                 .append("</li>")
                                 .append("\n")
                 );
@@ -81,19 +83,22 @@ public class PersonneServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        list.addPersonne(
-                new Personne(
-                        request.getParameter("firstname")
-                                .replace("&", "&amp;")
-                                .replace("<", "&lt;")
-                                .replace(">", "&gt;"),
-                        request.getParameter("lastname")
-                                .replace("&", "&amp;")
-                                .replace("<", "&lt;")
-                                .replace(">", "&gt;")
-                )
-        );
+        PrintWriter out = response.getWriter();
+        String prenom = request.getParameter("firstname");
+        String nom = request.getParameter("lastname");
 
-        response.sendRedirect(request.getContextPath() + "/personne");
+        if (prenom != null && !prenom.isBlank() && nom != null && !nom.isBlank()) {
+            list.addPersonne(
+                    new Personne(
+                            request.getParameter("firstname"),
+                            request.getParameter("lastname")
+                    )
+            );
+            response.sendRedirect(request.getContextPath() + "/personne");
+        } else {
+            response.setStatus(400);
+            out.println("prenom ou nom invalide");
+        }
+        out.close();
     }
 }

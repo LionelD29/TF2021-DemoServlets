@@ -37,7 +37,7 @@ public class AddProduitServlet extends HttpServlet {
                 "        <input type=\"number\" name=\"id\" placeholder=\"id\"><br>\n" +
                 "        <input type=\"text\" name=\"nom\" placeholder=\"nom\"><br>\n" +
                 "        <input type=\"text\" name=\"marque\" placeholder=\"marque\"><br>\n" +
-                "        <input type=\"number\" name=\"prix\" placeholder=\"prix\"><br>\n" +
+                "        <input type=\"text\" name=\"prix\" placeholder=\"prix\"><br>\n" +
                 "        <input type=\"submit\" value=\"Envoyer\">\n" +
                 "    </form>\n" +
                 "</div><!-- end container -->\n" +
@@ -56,7 +56,7 @@ public class AddProduitServlet extends HttpServlet {
             String marque = request.getParameter("marque");
             double prix = Double.parseDouble(request.getParameter("prix"));
 
-            if (nom == null || marque == null) {
+            if (nom == null || nom.isBlank() || marque == null || marque.isBlank()) {
                 response.setStatus(400);
                 out.println("marque ou nom non défini");
             } else {

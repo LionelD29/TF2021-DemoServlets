@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.util.Comparator;
 import java.util.List;
 
+import static utils.Util.escapeSpecialCharacters;
+
 @WebServlet(name = "ProduitGetAllServlet", value = "/produit")
 public class ProduitGetAllServlet extends HttpServlet {
 
@@ -52,9 +54,9 @@ public class ProduitGetAllServlet extends HttpServlet {
                 out.print("<li>");
                 out.print(produit.getId());
                 out.print(" | ");
-                out.print(produit.getNom());
+                out.print(escapeSpecialCharacters(produit.getNom()));
                 out.print(" | ");
-                out.print(produit.getMarque());
+                out.print(escapeSpecialCharacters(produit.getMarque()));
                 out.print(" | ");
                 out.print(produit.getPrix());
                 out.println("$</li>");

@@ -37,7 +37,8 @@ public class UpdateProduitServlet extends HttpServlet {
                 "    <form action=\""+ request.getContextPath() +"/produit/update\" method=\"post\">\n" +
                 "        <input type=\"number\" name=\"id\" placeholder=\"id\"><br>\n" +
                 "        <input type=\"text\" name=\"nom\" placeholder=\"nom\"><br>\n" +
-                "        <input type=\"number\" name=\"prix\" placeholder=\"prix\"><br>\n" +
+                "        <input type=\"text\" name=\"marque\" placeholder=\"marque\"><br>\n" +
+                "        <input type=\"text\" name=\"prix\" placeholder=\"prix\"><br>\n" +
                 "        <input type=\"submit\" value=\"Modifier\">\n" +
                 "    </form>\n" +
                 "</div><!-- end container -->\n" +
@@ -53,28 +54,27 @@ public class UpdateProduitServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             String nom = request.getParameter("nom");
+            String marque = request.getParameter("marque");
             double prix = Double.parseDouble(request.getParameter("prix"));
 
-            if (nom != null && !nom.isBlank()) {
-                ProduitForm form = new ProduitForm(nom, prix);
+            if (nom != null && !nom.isBlank() && marque != null && !marque.isBlank()) {
+                ProduitForm form = new ProduitForm(nom, prix, marque);
                 try {
                     service.update(id, form);
                     response.setStatus(200);
-                    out.println("Modification reussie");
+                    response.sendRedirect(request.getContextPath() + "/produit");
                 } catch (IllegalArgumentException e) {
                     response.setStatus(400);
                     out.println(e.getMessage());
                 }
             } else {
                 response.setStatus(400);
-                out.println("Nom non conforme");
+                out.println("Nom ou marque non conforme");
             }
         } catch (NumberFormatException e) {
             response.setStatus(400);
             out.println("id ou prix invalide");
         }
-
-        response.sendRedirect(request.getContextPath() + "/produit");
         out.close();
     }
 }

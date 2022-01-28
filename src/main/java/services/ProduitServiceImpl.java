@@ -90,6 +90,7 @@ public class ProduitServiceImpl implements ProduitService {
 
         try {
             p.setNom(form.getNom());
+            p.setMarque(form.getMarque());
             p.setPrix(form.getPrix());
             insert(p);
         } catch (NullPointerException npe) {
