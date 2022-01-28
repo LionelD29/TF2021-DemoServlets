@@ -43,15 +43,14 @@ public class PersonneServlet extends HttpServlet {
                                     <ul>
                         """);
 
-        list.getAll()
-                .forEach(
-                        p -> responseHtml.append("\t\t\t\t<li>")
-                                .append(escapeSpecialCharacters(p.getPrenom()))
-                                .append(" ")
-                                .append(escapeSpecialCharacters(p.getNom()))
-                                .append("</li>")
-                                .append("\n")
-                );
+        list.getAll().forEach(
+                    p -> responseHtml.append("\t\t\t\t<li>")
+                            .append(escapeSpecialCharacters(p.getPrenom()))
+                            .append(" ")
+                            .append(escapeSpecialCharacters(p.getNom()))
+                            .append("</li>")
+                            .append("\n")
+            );
 
         responseHtml.append("""
                             </ul>
@@ -88,12 +87,7 @@ public class PersonneServlet extends HttpServlet {
         String nom = request.getParameter("lastname");
 
         if (prenom != null && !prenom.isBlank() && nom != null && !nom.isBlank()) {
-            list.addPersonne(
-                    new Personne(
-                            request.getParameter("firstname"),
-                            request.getParameter("lastname")
-                    )
-            );
+            list.addPersonne(new Personne(prenom, nom));
             response.sendRedirect(request.getContextPath() + "/personne");
         } else {
             response.setStatus(400);
