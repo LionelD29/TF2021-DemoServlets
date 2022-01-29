@@ -1,24 +1,22 @@
-form {
-    width: 100%;
-}
-
-form > input {
-    background-color: lightgrey;
-    color: #44453e;
-    padding: 5px 10px;
+/* Main */
+a.btn {
     border-radius: 5px;
-    border: 1px solid lightgrey;
-    margin: 3px;
+    padding: 5px 10px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 2%;
 }
 
-.btn {
-    background-color: #ffe866;
-    color: #6d603b;
-    border: 1px solid #ffe866;
+/* Form */
+form {
+    flex-direction: column;
 }
 
-.btn:hover {
-    background-color: #6d603b;
-    color: #ffe866;
-    border-color: #6d603b;
+/* Large screens */
+@media screen and (min-width: 1024px) {
+    /* Form */
+    form > input {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }

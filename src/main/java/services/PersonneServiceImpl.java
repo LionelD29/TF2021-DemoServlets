@@ -8,10 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PersonneServiceImpl implements PersonneService {
-    private List<Personne> personnes = new ArrayList<>(Arrays.asList(
-            new Personne("Lionel", "Delsupexhe"),
-            new Personne("Christophe", "Delbeke")
-    ));
+    private List<Personne> personnes = new ArrayList<>();
 
     @Override
     public List<Personne> getAll() {

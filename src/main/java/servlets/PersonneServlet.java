@@ -23,23 +23,27 @@ public class PersonneServlet extends HttpServlet {
         responseHtml.append(
                 """
                         <!DOCTYPE html>
-                        <html lang="en">
+                        <html lang="fr">
                         <head>
                             <meta charset="UTF-8">
                             <meta http-equiv="X-UA-Compatible" content="IE=edge">
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                             <link rel="stylesheet" href="css/style.css">
-                            <link rel="stylesheet" href="css/personnes.css">
                             <title>Liste de personnes</title>
                         </head>
                         <body>
                             <div class="container">
-                                <h1>Bienvenue sur la page des personnes !</h1>
+                                <header>
+                                     <h1>MonApp</h1>
+                                     <nav>
+                                         <a href="/demoServlets">Accueil</a>
+                                         <a href="/demoServlets/produit">Produits</a>
+                                         <a class="active" href="/demoServlets/personne">Personnes</a>
+                                     </nav>
+                                 </header>
+                                <hr>
+                                <h2>Liste des personnes</h2>
                                 <main>
-                                    <nav>
-                                        <a href="/demoServlets">Accueil</a>
-                                        <a href="/demoServlets/produit">Page des produits</a>
-                                    </nav>
                                     <ul>
                         """);
 

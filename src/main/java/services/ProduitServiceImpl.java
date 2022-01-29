@@ -16,10 +16,7 @@ public class ProduitServiceImpl implements ProduitService {
         return _instance == null ? _instance = new ProduitServiceImpl() : _instance;
     }
 
-    private ProduitServiceImpl() {
-        produits.add(new Produit(1, "patate", "les bons legumes", 9.99));
-        produits.add(new Produit(2, "tomate", "les bons legumes", 8.99));
-    }
+    private ProduitServiceImpl() { }
     //endregion
 
     private final List<Produit> produits = new ArrayList<>();

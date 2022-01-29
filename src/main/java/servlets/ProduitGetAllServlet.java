@@ -28,23 +28,28 @@ public class ProduitGetAllServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println(
                 """
-                <!doctype html>
-                <html lang="en">
+                <!DOCTYPE html>
+                <html lang="fr">
                 <head>
                     <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <link rel="stylesheet" href="css/style.css">
-                    <link rel="stylesheet" href="css/personnes.css">
-                    <title>Get all produit</title>
+                    <link rel="stylesheet" href="css/produits.css">
+                    <title>Liste des produits</title>
                 </head>
                 <body>
                 <div class="container">
-                    <h1>Liste des produits</h1>
-                    <nav>
-                        <a href="/demoServlets">Accueil</a>
-                        <a href="/demoServlets/personne">Page des personnes</a>
-                        <a href="/demoServlets/produit/add">Ajouter un produit</a>
-                        <a href="/demoServlets/produit/update">Modifier un produit</a>
-                    </nav>
+                    <header>
+                        <h1>MonApp</h1>
+                        <nav>
+                            <a href="/demoServlets">Accueil</a>
+                            <a class="active" href="/demoServlets/produit">Produits</a>
+                            <a href="/demoServlets/personne">Personnes</a>
+                        </nav>
+                    </header>
+                    <hr>
+                    <h2>Liste des produits</h2>
                     <ul>
                 """);
 
@@ -64,7 +69,11 @@ public class ProduitGetAllServlet extends HttpServlet {
 
         out.print(
                 """
-                </ul>
+                    </ul>
+                    <div class="options">
+                        <a class="btn" href="/demoServlets/produit/add">Ajouter</a>
+                        <a class="btn" href="/demoServlets/produit/update">Modifier</a>
+                    </div>
                 </div><!-- end container -->
                 </body>
                 </html>
