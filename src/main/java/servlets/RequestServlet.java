@@ -38,6 +38,7 @@ public class RequestServlet extends HttpServlet {
         out.print(uri);
         out.print(' ');
         out.println(protocol);
+        out.println(req.getContextPath());
 
         headers.forEach((key, value) -> out.println(key + ":" + value));
 

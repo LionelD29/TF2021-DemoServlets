@@ -9,6 +9,12 @@ public class Produit {
     public Produit() {
     }
 
+    public Produit(String nom, String marque, double prix) {
+        this.nom = nom;
+        this.marque = marque;
+        this.prix = prix;
+    }
+
     public Produit(int id, String nom, String marque, double prix) {
         this.id = id;
         this.nom = nom;

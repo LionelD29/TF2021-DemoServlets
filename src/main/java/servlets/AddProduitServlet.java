@@ -1,5 +1,6 @@
 package servlets;
 
+import dataAccess.ProduitDAO;
 import models.Produit;
 import services.ProduitService;
 import services.ProduitServiceImpl;
@@ -13,7 +14,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "AddProduitServlet", value = "/produit/add")
 public class AddProduitServlet extends HttpServlet {
 
-    private final ProduitService service = ProduitServiceImpl.getInstance();
+    private final ProduitService service = ProduitDAO.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,10 +41,9 @@ public class AddProduitServlet extends HttpServlet {
                 "    <hr>\n" +
                 "    <h2>Ajout d'un produit</h2>\n" +
                 "    <form action=\""+ request.getContextPath() +"/produit/add\" method=\"post\">\n" +
-                "        <input type=\"number\" name=\"id\" placeholder=\"Id\"><br>\n" +
-                "        <input type=\"text\" name=\"nom\" placeholder=\"Nom\" maxlength=\"30\"><br>\n" +
+                "        <input type=\"text\" name=\"nom\" placeholder=\"Nom\" maxlength=\"30\" autofocus><br>\n" +
                 "        <input type=\"text\" name=\"marque\" placeholder=\"Marque\" maxlength=\"30\"><br>\n" +
-                "        <input type=\"text\" name=\"prix\" placeholder=\"Prix\"><br>\n" +
+                "        <input type=\"text\" name=\"prix\" placeholder=\"Prix\" required><br>\n" +
                 "        <input class=\"btn\" type=\"submit\" value=\"Envoyer\">\n" +
                 "    </form>\n" +
                 "</div><!-- end container -->\n" +
@@ -57,7 +57,6 @@ public class AddProduitServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
             String nom = request.getParameter("nom");
             String marque = request.getParameter("marque");
             double prix = Double.parseDouble(request.getParameter("prix"));
@@ -66,13 +65,10 @@ public class AddProduitServlet extends HttpServlet {
                 response.setStatus(400);
                 out.println("marque ou nom non défini");
             } else {
-                Produit p = new Produit(id, nom, marque, prix);
+                Produit p = new Produit(nom, marque, prix);
                 if (service.insert(p)) {
                     response.setStatus(200);
                     response.sendRedirect(request.getContextPath() + "/produit");
-                } else {
-                    response.setStatus(400);
-                    out.println("id deja pris");
                 }
             }
         } catch (NumberFormatException e) {

@@ -1,10 +1,7 @@
 package servlets;
 
 import dataAccess.ProduitDAO;
-import models.Produit;
-import models.ProduitForm;
 import services.ProduitService;
-import services.ProduitServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -12,9 +9,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "UpdateProduitServlet", value = "/produit/update")
-public class UpdateProduitServlet extends HttpServlet {
-
+@WebServlet(name = "DeleteProduitServlet", value = "/produit/delete")
+public class DeleteProduitServlet extends HttpServlet {
     private final ProduitService service = ProduitDAO.getInstance();
 
     @Override
@@ -29,7 +25,7 @@ public class UpdateProduitServlet extends HttpServlet {
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
                 "    <link rel=\"stylesheet\" href=\"../css/style.css\">\n" +
                 "    <link rel=\"stylesheet\" href=\"../css/produits.css\">\n" +
-                "    <title>Modification d'un produit</title>\n" +
+                "    <title>Suppression d'un produit</title>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "<div class=\"container\">\n" +
@@ -40,13 +36,10 @@ public class UpdateProduitServlet extends HttpServlet {
                 "       </nav>\n" +
                 "    </header>\n" +
                 "    <hr>\n" +
-                "    <h2>Modification d'un produit</h2>\n" +
-                "    <form action=\""+ request.getContextPath() +"/produit/update\" method=\"post\">\n" +
+                "    <h2>Suppression d'un produit</h2>\n" +
+                "    <form action=\""+ request.getContextPath() +"/produit/delete\" method=\"post\">\n" +
                 "        <input type=\"number\" name=\"id\" placeholder=\"Id\" required autofocus><br>\n" +
-                "        <input type=\"text\" name=\"nom\" placeholder=\"Nom\" maxlength=\"30\"><br>\n" +
-                "        <input type=\"text\" name=\"marque\" placeholder=\"Marque\" maxlength=\"30\"><br>\n" +
-                "        <input type=\"text\" name=\"prix\" placeholder=\"Prix\" required><br>\n" +
-                "        <input class=\"btn\" type=\"submit\" value=\"Modifier\">\n" +
+                "        <input class=\"btn\" type=\"submit\" value=\"Supprimer\">\n" +
                 "    </form>\n" +
                 "</div><!-- end container -->\n" +
                 "</body>" +
@@ -57,27 +50,17 @@ public class UpdateProduitServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            String nom = request.getParameter("nom");
-            String marque = request.getParameter("marque");
-            double prix = Double.parseDouble(request.getParameter("prix"));
-
-            ProduitForm form = new ProduitForm(nom, prix, marque);
-            try {
-                service.update(id, form);
-                response.setStatus(200);
+            if (service.delete(id) != null) {
                 response.sendRedirect(request.getContextPath() + "/produit");
-            } catch (IllegalArgumentException e) {
+            } else {
                 response.setStatus(400);
-                out.println(e.getMessage());
+                out.println("id invalide");
             }
 
         } catch (NumberFormatException e) {
-            response.setStatus(400);
-            out.println("id ou prix invalide");
+            e.printStackTrace();
         }
-        out.close();
     }
 }

@@ -1,5 +1,6 @@
 package servlets;
 
+import dataAccess.ProduitDAO;
 import models.Produit;
 import services.ProduitService;
 import services.ProduitServiceImpl;
@@ -19,7 +20,7 @@ import static utils.Util.escapeSpecialCharacters;
 @WebServlet(name = "ProduitGetAllServlet", value = "/produit")
 public class ProduitGetAllServlet extends HttpServlet {
 
-    ProduitService service = ProduitServiceImpl.getInstance();
+    ProduitService service = ProduitDAO.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,7 +65,7 @@ public class ProduitGetAllServlet extends HttpServlet {
                 out.print(escapeSpecialCharacters(produit.getMarque()));
                 out.print(" | ");
                 out.print(produit.getPrix());
-                out.println("$</li>");
+                out.println(" EUR</li>");
         });
 
         out.print(
@@ -73,6 +74,7 @@ public class ProduitGetAllServlet extends HttpServlet {
                     <div class="options">
                         <a class="btn" href="/demoServlets/produit/add">Ajouter</a>
                         <a class="btn" href="/demoServlets/produit/update">Modifier</a>
+                        <a class="btn" href="/demoServlets/produit/delete">Supprimer</a>
                     </div>
                 </div><!-- end container -->
                 </body>

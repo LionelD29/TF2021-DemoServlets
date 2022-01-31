@@ -13,9 +13,9 @@
         <header>
             <h1>MonApp</h1>
             <nav>
-                <a class="active" href="/demoServlets">Accueil</a>
-                <a href="/demoServlets/produit">Produits</a>
-                <a href="/demoServlets/personne">Personnes</a>
+                <a class="active" href="<%= request.getContextPath() %>">Accueil</a>
+                <a href="<%= request.getContextPath() %>/produit">Produits</a>
+                <a href="<%= request.getContextPath() %>/personne">Personnes</a>
             </nav>
         </header>
         <hr>
