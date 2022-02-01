@@ -19,39 +19,7 @@ public class UpdateProduitServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-
-        out.print("<!doctype html>\n" +
-                "<html lang=\"fr\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "    <link rel=\"stylesheet\" href=\"../css/style.css\">\n" +
-                "    <link rel=\"stylesheet\" href=\"../css/produits.css\">\n" +
-                "    <title>Modification d'un produit</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<div class=\"container\">\n" +
-                "    <header>\n" +
-                "       <h1>MonApp</h1>\n" +
-                "       <nav>\n" +
-                "           <a href=\"/demoServlets/produit\">Retour</a>\n" +
-                "       </nav>\n" +
-                "    </header>\n" +
-                "    <hr>\n" +
-                "    <h2>Modification d'un produit</h2>\n" +
-                "    <form action=\""+ request.getContextPath() +"/produit/update\" method=\"post\">\n" +
-                "        <input type=\"number\" name=\"id\" placeholder=\"Id\" required autofocus><br>\n" +
-                "        <input type=\"text\" name=\"nom\" placeholder=\"Nom\" maxlength=\"30\"><br>\n" +
-                "        <input type=\"text\" name=\"marque\" placeholder=\"Marque\" maxlength=\"30\"><br>\n" +
-                "        <input type=\"text\" name=\"prix\" placeholder=\"Prix\" required><br>\n" +
-                "        <input class=\"btn\" type=\"submit\" value=\"Modifier\">\n" +
-                "    </form>\n" +
-                "</div><!-- end container -->\n" +
-                "</body>" +
-                "</html>");
-        out.close();
+        request.getRequestDispatcher("/jsp/updateProduit.jsp").forward(request, response);
     }
 
     @Override

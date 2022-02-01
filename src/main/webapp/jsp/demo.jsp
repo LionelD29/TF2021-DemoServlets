@@ -40,6 +40,6 @@
 <h2>Les données accessibles</h2>
 
 
-
 <%@include file="../WEB-INF/jsp/foot.jsp" %>
+
 

@@ -8,7 +8,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PersonneServiceImpl implements PersonneService {
-    private List<Personne> personnes = new ArrayList<>();
+
+    // region SINGLETON
+    private static PersonneServiceImpl _instance;
+
+    private PersonneServiceImpl() {
+        personnes = new ArrayList<>();
+    }
+
+    public static PersonneServiceImpl getInstance() {
+        return _instance == null ? _instance = new PersonneServiceImpl() : _instance;
+    }
+    // endregion
+
+    private final List<Personne> personnes;
 
     @Override
     public List<Personne> getAll() {
