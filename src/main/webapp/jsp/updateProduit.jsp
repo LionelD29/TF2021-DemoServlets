@@ -9,4 +9,4 @@
             <input type="text" name="prix" placeholder="Prix" required><br>
             <input class="btn" type="submit" value="Modifier">
         </form>
-<%@include file="/WEB-INF/jsp/footProduit.jsp" %>
+<%@include file="/WEB-INF/jsp/foot.jsp" %>

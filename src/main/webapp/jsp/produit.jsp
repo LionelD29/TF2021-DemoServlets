@@ -29,4 +29,4 @@
             <a class="btn" href="/demoServlets/produit/update">Modifier</a>
             <a class="btn" href="/demoServlets/produit/delete">Supprimer</a>
         </div>
-<%@include file="/WEB-INF/jsp/footProduit.jsp" %>
+<%@include file="/WEB-INF/jsp/foot.jsp" %>

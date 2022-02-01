@@ -1,10 +1,8 @@
 package servlets;
 
 import dataAccess.ProduitDAO;
-import models.Produit;
 import models.ProduitForm;
 import services.ProduitService;
-import services.ProduitServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -41,7 +39,6 @@ public class UpdateProduitServlet extends HttpServlet {
                 response.setStatus(400);
                 out.println(e.getMessage());
             }
-
         } catch (NumberFormatException e) {
             response.setStatus(400);
             out.println("id ou prix invalide");

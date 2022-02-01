@@ -3,7 +3,6 @@ package servlets;
 import dataAccess.ProduitDAO;
 import models.Produit;
 import services.ProduitService;
-import services.ProduitServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
