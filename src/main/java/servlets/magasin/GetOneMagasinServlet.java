@@ -1,4 +1,4 @@
-package servlets;
+package servlets.magasin;
 
 import dataAccess.MagasinDAO;
 import models.Magasin;
@@ -26,7 +26,7 @@ public class GetOneMagasinServlet extends HttpServlet {
             } else {
                 response.setStatus(200);
                 request.setAttribute("magasin", magasin);
-                request.getRequestDispatcher("/jsp/magasinDetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/magasin/magasinDetail.jsp").forward(request, response);
             }
         } catch (NumberFormatException e) {
             response.setStatus(400);

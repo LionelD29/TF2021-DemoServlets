@@ -1,7 +1,7 @@
-package servlets;
+package servlets.produit;
 
 import dataAccess.ProduitDAO;
-import models.Produit;
+import models.ProduitForm;
 import services.ProduitService;
 
 import javax.servlet.*;
@@ -10,14 +10,14 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "AddProduitServlet", value = "/produit/add")
-public class AddProduitServlet extends HttpServlet {
+@WebServlet(name = "UpdateProduitServlet", value = "/produit/update")
+public class UpdateProduitServlet extends HttpServlet {
 
     private final ProduitService service = ProduitDAO.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/addProduit.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/produit/updateProduit.jsp").forward(request, response);
     }
 
     @Override
@@ -25,23 +25,23 @@ public class AddProduitServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            int id = Integer.parseInt(request.getParameter("id"));
             String nom = request.getParameter("nom");
             String marque = request.getParameter("marque");
             double prix = Double.parseDouble(request.getParameter("prix"));
 
-            if (nom == null || nom.isBlank() || marque == null || marque.isBlank()) {
+            ProduitForm form = new ProduitForm(nom, prix, marque);
+            try {
+                service.update(id, form);
+                response.setStatus(200);
+                response.sendRedirect(request.getContextPath() + "/produit");
+            } catch (IllegalArgumentException e) {
                 response.setStatus(400);
-                out.println("marque ou nom non défini");
-            } else {
-                Produit p = new Produit(nom, marque, prix);
-                if (service.insert(p)) {
-                    response.setStatus(200);
-                    response.sendRedirect(request.getContextPath() + "/produit");
-                }
+                out.println(e.getMessage());
             }
         } catch (NumberFormatException e) {
             response.setStatus(400);
-            out.print("id ou prix invalide");
+            out.println("id ou prix invalide");
         }
         out.close();
     }

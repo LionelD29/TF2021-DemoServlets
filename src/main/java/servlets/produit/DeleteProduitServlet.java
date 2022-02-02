@@ -1,7 +1,6 @@
-package servlets;
+package servlets.produit;
 
 import dataAccess.ProduitDAO;
-import models.ProduitForm;
 import services.ProduitService;
 
 import javax.servlet.*;
@@ -10,39 +9,28 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "UpdateProduitServlet", value = "/produit/update")
-public class UpdateProduitServlet extends HttpServlet {
-
+@WebServlet(name = "DeleteProduitServlet", value = "/produit/delete")
+public class DeleteProduitServlet extends HttpServlet {
     private final ProduitService service = ProduitDAO.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/updateProduit.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/produit/deleteProduit.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            String nom = request.getParameter("nom");
-            String marque = request.getParameter("marque");
-            double prix = Double.parseDouble(request.getParameter("prix"));
-
-            ProduitForm form = new ProduitForm(nom, prix, marque);
-            try {
-                service.update(id, form);
-                response.setStatus(200);
+            if (service.delete(id) != null) {
                 response.sendRedirect(request.getContextPath() + "/produit");
-            } catch (IllegalArgumentException e) {
+            } else {
                 response.setStatus(400);
-                out.println(e.getMessage());
+                out.println("id invalide");
             }
         } catch (NumberFormatException e) {
-            response.setStatus(400);
-            out.println("id ou prix invalide");
+            e.printStackTrace();
         }
-        out.close();
     }
 }

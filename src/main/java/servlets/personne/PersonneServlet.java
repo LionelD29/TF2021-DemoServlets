@@ -1,4 +1,4 @@
-package servlets;
+package servlets.personne;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,7 +15,7 @@ public class PersonneServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/personne.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/personne/personne.jsp").forward(request, response);
     }
 
     @Override

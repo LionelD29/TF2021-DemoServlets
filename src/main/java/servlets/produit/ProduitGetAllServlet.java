@@ -1,4 +1,4 @@
-package servlets;
+package servlets.produit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +12,6 @@ public class ProduitGetAllServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/produit.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/produit/produit.jsp").forward(request, response);
     }
 }

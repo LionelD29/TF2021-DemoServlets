@@ -1,4 +1,4 @@
-package servlets;
+package servlets.magasin;
 
 import dataAccess.MagasinDAO;
 import models.Magasin;
@@ -16,7 +16,7 @@ public class AddMagasinServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/addMagasin.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/magasin/addMagasin.jsp").forward(request, response);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package servlets;
+package servlets.magasin;
 
 import dataAccess.MagasinDAO;
 import models.Magasin;
@@ -11,8 +11,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "DeleteProduitFromMagasinServlet", value = "/magasin/deleteProduit")
-public class DeleteProduitFromMagasinServlet extends HttpServlet {
+@WebServlet(name = "AddProduitToMagasinServlet", value = "/magasin/addProduit")
+public class AddProduitToMagasinServlet extends HttpServlet {
     MagasinService service = MagasinDAO.getInstance();
 
     @Override
@@ -22,11 +22,12 @@ public class DeleteProduitFromMagasinServlet extends HttpServlet {
             int magasinId = Integer.parseInt(request.getParameter("id"));
             Magasin magasin = service.getOne(magasinId);
             request.setAttribute("magasin", magasin);
-            request.getRequestDispatcher("/jsp/deleteProduitMagasin.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/magasin/addProduitMagasin.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             response.setStatus(400);
             out.println("id invalide");
         }
+
         out.close();
     }
 
@@ -38,10 +39,17 @@ public class DeleteProduitFromMagasinServlet extends HttpServlet {
             Magasin magasin = service.getOne(magasinId);
 
             int produitId = Integer.parseInt(request.getParameter("produitId"));
-
-            if (magasin.deleteProduct(produitId) == null) {
+            String nom = request.getParameter("nom");
+            String marque = request.getParameter("marque");
+            double prix = Double.parseDouble(request.getParameter("prix"));
+            Produit p = new Produit(produitId, nom, marque, prix);
+            
+            if (nom.isBlank() || marque.isBlank()) {
                 response.setStatus(400);
-                out.println("Aucun produit ne possède cet id");
+                out.println("nom ou marque invalide");
+            } else if (!magasin.insertProduct(p)) {
+                response.setStatus(400);
+                out.println("Id déjà pris");
             } else {
                 response.setStatus(200);
                 response.sendRedirect(request.getContextPath() + "/magasin/detail?id=" + magasinId);

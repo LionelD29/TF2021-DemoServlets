@@ -1,4 +1,4 @@
-package servlets;
+package servlets.magasin;
 
 import dataAccess.MagasinDAO;
 import models.Magasin;
@@ -24,6 +24,6 @@ public class GetAllMagasinServlet extends HttpServlet {
                 .toList();
 
         request.setAttribute("list", list);
-        request.getRequestDispatcher("/jsp/magasin.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/magasin/magasin.jsp").forward(request, response);
     }
 }
