@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@include file="/WEB-INF/jsp/headAddDeleteUpdateProduit.jsp" %>
         <h2>Ajout d'un produit</h2>

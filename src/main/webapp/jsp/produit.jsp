@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="models.Produit" %>
 <%@ page import="services.ProduitService" %>
@@ -25,8 +25,8 @@
 
         </ul>
         <div class="options">
-            <a class="btn" href="/demoServlets/produit/add">Ajouter</a>
-            <a class="btn" href="/demoServlets/produit/update">Modifier</a>
-            <a class="btn" href="/demoServlets/produit/delete">Supprimer</a>
+            <a class="btn" href="<%= request.getContextPath() %>/produit/add">Ajouter</a>
+            <a class="btn" href="<%= request.getContextPath() %>/produit/update">Modifier</a>
+            <a class="btn" href="<%= request.getContextPath() %>/produit/delete">Supprimer</a>
         </div>
 <%@include file="/WEB-INF/jsp/foot.jsp" %>

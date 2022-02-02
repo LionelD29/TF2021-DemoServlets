@@ -16,6 +16,7 @@
                 <a class="active" href="<%= request.getContextPath() %>">Accueil</a>
                 <a href="<%= request.getContextPath() %>/produit">Produits</a>
                 <a href="<%= request.getContextPath() %>/personne">Personnes</a>
+                <a href="<%= request.getContextPath() %>/magasin">Magasins</a>
             </nav>
         </header>
         <hr>
