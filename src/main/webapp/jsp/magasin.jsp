@@ -43,7 +43,5 @@
         </ul>
         <div class="options">
             <a class="btn" href="<%= request.getContextPath() %>/magasin/addMagasin">Ajouter un magasin</a>
-            <a class="btn" href="<%= request.getContextPath() %>/magasin/addProduit">Ajouter un produit</a>
-            <a class="btn" href="<%= request.getContextPath() %>/magasin/deleteProduit">Supprimer un produit</a>
         </div>
 <%@include file="/WEB-INF/jsp/foot.jsp" %>

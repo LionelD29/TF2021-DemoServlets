@@ -32,6 +32,7 @@ public class GetOneMagasinServlet extends HttpServlet {
             response.setStatus(400);
             out.println("id invalide");
         }
+
         out.close();
     }
 }

@@ -22,16 +22,11 @@ public class MagasinDAO implements MagasinService {
     }
 
     private void initList() {
-        magasins.add(new Magasin(0,
-                "Carrefour",
-                "rue",
-                "ville",
-                "cp",
-                "04",
-                1000,
-                List.of(new Produit("p1", "m1", 1))));
-        magasins.add(new Magasin(1, "Delhaize", new Produit("p3", "m3", 3), new Produit("p2", "m2", 2)));
-        magasins.add(new Magasin(2, "Cora", new Produit("p4", "m4", 4), new Produit("p5", "m5", 5)));
+        magasins.add(
+                new Magasin(0, "Carrefour", "rue", "ville",
+                "cp", "04", 1000
+                )
+        );
     }
     // endregion
 

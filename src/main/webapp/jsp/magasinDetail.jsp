@@ -2,7 +2,8 @@
 
 <%@ page import="models.Magasin" %>
 <%@ page import="models.Produit" %>
-<%@ page import="static utils.Util.escapeSpecialCharacters" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Comparator" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,16 +24,25 @@
                </nav>
             </header>
             <hr>
-            <% Magasin magasin = (Magasin) request.getAttribute("magasin"); %>
-            <h2><%= escapeSpecialCharacters(magasin.getNom()) %></h2>
-            <p>ID : <%= magasin.getId() %></p>
+            <%
+                Magasin magasin = (Magasin) request.getAttribute("magasin");
+                List<Produit> produits = magasin.getProduitsDispo()
+                                                .stream()
+                                                .sorted(Comparator.comparingInt(Produit::getId))
+                                                .toList();
+            %>
+            <h2><%= magasin.getNom() %> (Id : <%= magasin.getId() %>)</h2>
             <p>Adresse : <%= magasin.getRue()+ ", " + magasin.getCodePostal() + " - " + magasin.getVille()%></p>
             <p>Téléphone : <%= magasin.getNumeroTel() %></p>
             <p>Superficie : <%= magasin.getSuperficie() %> m²</p>
             <p>Produits disponibles : </p>
             <ul>
-            <% for(Produit p : magasin.getProduitsDispo()) { %>
-                    <li><%= p.getNom() + " | " + p.getMarque() + " | " + p.getPrix() + " EUR" %></li>
+            <% for(Produit p : produits) { %>
+                    <li><%= p.getId() + " | " + p.getNom() + " | " + p.getMarque() + " | " + p.getPrix() + " EUR" %></li>
             <% } %>
             </ul>
+            <div class="options">
+                <a class="btn" href="<%= request.getContextPath() %>/magasin/addProduit?id=<%= magasin.getId() %>">Ajouter un produit</a>
+                <a class="btn" href="<%= request.getContextPath() %>/magasin/deleteProduit?id=<%= magasin.getId() %>">Supprimer un produit</a>
+            </div>
 <%@include file="/WEB-INF/jsp/foot.jsp" %>

@@ -16,12 +16,6 @@ public class Magasin {
     public Magasin() {
     }
 
-    public Magasin(int id, String nom, Produit... produitsDispo) {
-        this.id = id;
-        this.nom = nom;
-        this.produitsDispo = List.of(produitsDispo);
-    }
-
     public Magasin(int id, String nom, String rue, String ville, String codePostal, String numeroTel, int superficie) {
         this.id = id;
         this.nom = nom;
@@ -30,17 +24,6 @@ public class Magasin {
         this.codePostal = codePostal;
         this.numeroTel = numeroTel;
         this.superficie = superficie;
-    }
-
-    public Magasin(int id, String nom, String rue, String ville, String codePostal, String numeroTel, int superficie, List<Produit> produitsDispo) {
-        this.id = id;
-        this.nom = nom;
-        this.rue = rue;
-        this.ville = ville;
-        this.codePostal = codePostal;
-        this.numeroTel = numeroTel;
-        this.superficie = superficie;
-        this.produitsDispo = produitsDispo;
     }
 
     // region getters_setters
@@ -121,7 +104,7 @@ public class Magasin {
 
     public Produit deleteProduct(int productId) {
         Produit deletedProduct = produitsDispo.stream()
-                .filter(p -> p.getId() == id)
+                .filter(p -> p.getId() == productId)
                 .findFirst()
                 .orElse(null);
 
