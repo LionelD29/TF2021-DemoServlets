@@ -224,7 +224,7 @@ public class ProduitDAO implements ProduitService {
                 System.out.println("Suppression échouée");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Une erreur SQL s'est produite");
         }
         return deletedProduct;
     }

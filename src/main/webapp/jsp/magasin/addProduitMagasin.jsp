@@ -28,9 +28,6 @@
             <form action="<%= request.getContextPath() %>/magasin/addProduit" method="post">
                 <input type="hidden" name="magasinId" value="<%= magasin.getId() %>">
                 <input type="number" name="produitId" placeholder="Id du produit" required autofocus><br>
-                <input type="text" name="nom" placeholder="Nom" maxlength="30" required><br>
-                <input type="text" name="marque" placeholder="Marque" maxlength="30" required><br>
-                <input type="text" name="prix" placeholder="Prix" required><br>
                 <input class="btn" type="submit" value="Ajouter">
             </form>
 <%@include file="/WEB-INF/jsp/foot.jsp" %>

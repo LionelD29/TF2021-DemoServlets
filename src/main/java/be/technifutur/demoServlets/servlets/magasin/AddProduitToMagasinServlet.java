@@ -36,27 +36,18 @@ public class AddProduitToMagasinServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             int magasinId = Integer.parseInt(request.getParameter("magasinId"));
-            Magasin magasin = service.getOne(magasinId);
-
             int produitId = Integer.parseInt(request.getParameter("produitId"));
-            String nom = request.getParameter("nom");
-            String marque = request.getParameter("marque");
-            double prix = Double.parseDouble(request.getParameter("prix"));
-            Produit p = new Produit(produitId, nom, marque, prix);
-            
-            if (nom.isBlank() || marque.isBlank()) {
-                response.setStatus(400);
-                out.println("nom ou marque invalide");
-            } else if (!magasin.insertProduct(p)) {
-                response.setStatus(400);
-                out.println("Id déjà pris");
-            } else {
+
+            if (service.insertProduct(magasinId, produitId)) {
                 response.setStatus(200);
                 response.sendRedirect(request.getContextPath() + "/magasin/detail?id=" + magasinId);
+            } else {
+                response.setStatus(400);
+                out.println("insertion échouée");
             }
         } catch (NumberFormatException e) {
             response.setStatus(400);
-            out.println("idMagasin ou prix invalide");
+            out.println("idMagasin ou idProduit invalide");
         }
         out.close();
     }

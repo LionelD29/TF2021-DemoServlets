@@ -34,16 +34,14 @@ public class DeleteProduitFromMagasinServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             int magasinId = Integer.parseInt(request.getParameter("magasinId"));
-            Magasin magasin = service.getOne(magasinId);
-
             int produitId = Integer.parseInt(request.getParameter("produitId"));
 
-            if (magasin.deleteProduct(produitId) == null) {
-                response.setStatus(400);
-                out.println("Aucun produit ne possède cet id");
-            } else {
+            if (service.removeProduct(magasinId, produitId) != null) {
                 response.setStatus(200);
                 response.sendRedirect(request.getContextPath() + "/magasin/detail?id=" + magasinId);
+            } else {
+                response.setStatus(400);
+                out.println("suppression échouée");
             }
         } catch (NumberFormatException e) {
             response.setStatus(400);

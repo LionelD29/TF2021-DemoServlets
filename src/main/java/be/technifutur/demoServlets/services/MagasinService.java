@@ -13,7 +13,7 @@ public interface MagasinService {
 
     boolean insert(Magasin toAdd);
 
-    boolean insertProduct(int idMagasin, Produit toAdd);
+    boolean insertProduct(int idMagasin, int toProduit);
 
     Produit removeProduct(int idMagasin, int idProduit);
 }

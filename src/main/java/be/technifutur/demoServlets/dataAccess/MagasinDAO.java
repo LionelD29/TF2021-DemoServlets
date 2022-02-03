@@ -3,6 +3,7 @@ package be.technifutur.demoServlets.dataAccess;
 import be.technifutur.demoServlets.models.Magasin;
 import be.technifutur.demoServlets.models.Produit;
 import be.technifutur.demoServlets.services.MagasinService;
+import be.technifutur.demoServlets.services.ProduitService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,10 +55,7 @@ public class MagasinDAO implements MagasinService {
                         rs.getInt("area")
                 );
 
-                // TODO: finir la liaison entre la BDD des magasins et celle des produits
-                /*m.setProduitsDispo(
-                        getAllProduits(m.getId())
-                );*/
+                m.setProduitsDispo(getAllProduits(m.getId()));
                 list.add(m);
             }
         } catch (SQLException e) {
@@ -107,26 +105,73 @@ public class MagasinDAO implements MagasinService {
         return insertResult;
     }
 
-    // TODO: Même chose
-//    public List<Produit> getAllProduits(int magasinId) {
-//        return null;
-//    }
+    public List<Produit> getAllProduits(int magasinId) {
+        List<Produit> produits;
+        String query = "SELECT p.* " +
+                       "FROM store_product_pivot spv " +
+                       "    INNER JOIN products p " +
+                       "        ON p.id = spv.product_id " +
+                       "WHERE spv.store_id = " + magasinId;
+
+        try (
+                Connection co = ConnectionFactory.getConnection();
+                Statement stmt = co.createStatement();
+                ResultSet rs = stmt.executeQuery(query)
+        ) {
+            produits = new ArrayList<>();
+            while (rs.next()) {
+                Produit p = new Produit(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("brand"),
+                        rs.getDouble("price")
+                );
+
+                produits.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            produits = null;
+        }
+        return produits;
+    }
 
     @Override
-    public boolean insertProduct(int idMagasin, Produit toAdd) {
+    public boolean insertProduct(int idMagasin, int idProduit) {
         boolean insertResult = false;
-        // TODO: Ajouter le produit dans la table pivot de la BDD
+        Produit p;
+        ProduitService serviceProduit = ProduitDAO.getInstance();
+
         // D'abord vérifier si le produit existe déjà dans la table products
         // Sinon, renvoyer un message pour dire de d'abord créer le produit
-
-        // Une fois cela fait, ajouter dans la table pivot :
-        // INSERT INTO store_product_pivot VALUES (idMagasin, toAdd.getId());
-        // Si ça se passe bien, ajouter alors le produit en interne
-
-        // Pour ajouter le produit en interne
-        Magasin magasin = getOne(idMagasin);
-        if (magasin != null) {
-            insertResult = magasin.insertProduct(toAdd);
+        p = serviceProduit.getOne(idProduit);
+        if (p == null) {
+            System.out.println("Le produit n'existe pas encore");
+        } else {
+            // Une fois cela fait, ajouter dans la table pivot :
+            String query = "INSERT INTO store_product_pivot VALUES (" + idMagasin + ", " + idProduit + ")";
+            try (
+                Connection co = ConnectionFactory.getConnection();
+                Statement stmt = co.createStatement()
+            ) {
+                if (1 != stmt.executeUpdate(query)) {
+                    System.out.println("Echec de l'insertion du couple magasin / produit dans la table pivot");
+                } else {
+                    System.out.println("Insertion dans la table pivot réussie");
+                    // Si ça se passe bien, ajouter alors le produit en interne
+                    Magasin magasin = getOne(idMagasin);
+                    if (magasin == null) {
+                        System.out.println("Ce magasin n'est pas utilisé dans le programme");
+                    } else {
+                        insertResult = magasin.insertProduct(p);
+                        if (!insertResult) {
+                            System.out.println("Id de produit déjà utilisé dans la liste du magasin");
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return insertResult;
     }
@@ -134,18 +179,39 @@ public class MagasinDAO implements MagasinService {
     @Override
     public Produit removeProduct(int idMagasin, int idProduit) {
         Produit p = null;
-        // TODO: Supprimer le produit dans la table pivot de la BDD
-        // D'abord vérifier s'il existe bien une ligne correspondante dans la table pivot
+        // D'abord vérifier si le magasin passé contient bien ce produit
         // Sinon, renvoyer un message d'erreur
 
-        // Une fois cela fait, supprimer dans la table pivot :
-        // DELETE FROM store_product_pivot WHERE store_id = idMagasin AND product_id = idProduit;
-        // Si ça se passe bien, supprimer alors le produit en interne
-
-        // Pour supprimer le produit en interne
         Magasin magasin = getOne(idMagasin);
-        if (magasin != null) {
-            p = magasin.deleteProduct(idProduit);
+
+        if (magasin == null) {
+            System.out.println("id du magasin invalide");
+        } else {
+            boolean isPresent = magasin.getProduitsDispo()
+                                        .stream()
+                                        .anyMatch(prod -> prod.getId() == idProduit);
+
+            if (!isPresent) {
+                System.out.println("produit non disponible dans le magasin");
+            } else {
+                // Une fois cela fait, supprimer dans la table pivot :
+                String query = "DELETE FROM store_product_pivot WHERE store_id = "
+                        + idMagasin + " AND product_id = " + idProduit;
+
+                try (
+                        Connection co = ConnectionFactory.getConnection();
+                        Statement stmt = co.createStatement()
+                ) {
+                    if (1 != stmt.executeUpdate(query)) {
+                        System.out.println("Suppression dans la table pivot échouée");
+                    } else {
+                        // Si ça se passe bien, supprimer alors le produit en interne
+                        p = magasin.deleteProduct(idProduit);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return p;
     }
