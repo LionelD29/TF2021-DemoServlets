@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="models.Produit" %>
-<%@ page import="services.ProduitService" %>
-<%@ page import="dataAccess.ProduitDAO" %>
+<%@ page import="be.technifutur.demoServlets.models.Produit" %>
+<%@ page import="be.technifutur.demoServlets.services.ProduitService" %>
+<%@ page import="be.technifutur.demoServlets.dataAccess.ProduitDAO" %>
 <%@ page import="java.util.Comparator" %>
-<%@ page import="static utils.Util.escapeSpecialCharacters" %>
+<%@ page import="static be.technifutur.demoServlets.utils.Util.escapeSpecialCharacters" %>
 
 <%@include file="/WEB-INF/jsp/headProduit.jsp" %>
         <h2>Liste des produits</h2>

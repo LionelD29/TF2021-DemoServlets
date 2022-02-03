@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@ page import="models.Magasin" %>
+<%@ page import="be.technifutur.demoServlets.models.Magasin" %>
 
 <!DOCTYPE html>
 <html lang="fr">

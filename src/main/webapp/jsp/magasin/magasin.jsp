@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ page import="java.util.List" %>
-<%@ page import="models.Magasin" %>
-<%@ page import="services.MagasinService" %>
-<%@ page import="dataAccess.MagasinDAO" %>
+<%@ page import="be.technifutur.demoServlets.models.Magasin" %>
+<%@ page import="be.technifutur.demoServlets.services.MagasinService" %>
+<%@ page import="be.technifutur.demoServlets.dataAccess.MagasinDAO" %>
 <%@ page import="java.util.Comparator" %>
-<%@ page import="static utils.Util.escapeSpecialCharacters" %>
+<%@ page import="static be.technifutur.demoServlets.utils.Util.escapeSpecialCharacters" %>
 
 <!DOCTYPE html>
 <html lang="fr">

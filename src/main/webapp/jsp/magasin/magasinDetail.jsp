@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@ page import="models.Magasin" %>
-<%@ page import="models.Produit" %>
+<%@ page import="be.technifutur.demoServlets.models.Magasin" %>
+<%@ page import="be.technifutur.demoServlets.models.Produit" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Comparator" %>
 
@@ -32,8 +32,7 @@
                                                 .toList();
             %>
             <h2><%= magasin.getNom() %> (Id : <%= magasin.getId() %>)</h2>
-            <p>Adresse : <%= magasin.getRue()+ ", " + magasin.getCodePostal() + " - " + magasin.getVille()%></p>
-            <p>Téléphone : <%= magasin.getNumeroTel() %></p>
+            <p>Adresse : <%= magasin.getRue() + " " + magasin.getNumero() + ", " + magasin.getCodePostal() + " " + magasin.getVille()%></p>
             <p>Superficie : <%= magasin.getSuperficie() %> m²</p>
             <p>Produits disponibles : </p>
             <ul>

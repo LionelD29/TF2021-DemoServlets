@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="models.Personne" %>
-<%@ page import="services.PersonneService" %>
-<%@ page import="services.PersonneServiceImpl" %>
-<%@ page import="static utils.Util.escapeSpecialCharacters" %>
+<%@ page import="be.technifutur.demoServlets.models.Personne" %>
+<%@ page import="be.technifutur.demoServlets.services.PersonneService" %>
+<%@ page import="be.technifutur.demoServlets.services.PersonneServiceImpl" %>
+<%@ page import="static be.technifutur.demoServlets.utils.Util.escapeSpecialCharacters" %>
 
 <%@include file="/WEB-INF/jsp/head.jsp" %>
         <h2>Liste des personnes</h2>

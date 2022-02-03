@@ -20,12 +20,11 @@
             </header>
             <hr>
             <form action="<%= request.getContextPath() %>/magasin/addMagasin" method="post">
-                <input type="number" name="id" placeholder="Id" required autofocus>
-                <input type="text" name="name" placeholder="Nom" required>
+                <input type="text" name="name" placeholder="Nom" required autofocus>
                 <input type="text" name="street" placeholder="Rue" required>
                 <input type="text" name="city" placeholder="Ville" required>
                 <input type="text" name="postalCode" placeholder="Code postal" required>
-                <input type="tel" name="phoneNumber" placeholder="N° téléphone" required>
+                <input type="number" name="number" placeholder="Numéro dans la rue" required>
                 <input type="number" name="area" placeholder="Superficie" required>
                 <input class="btn" type="submit" value="Ajouter">
             </form>
